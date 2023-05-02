@@ -1,0 +1,16 @@
+[
+    { "type": "title",
+      "title": "Lexecution" },
+
+    { "type": "string",
+      "title": "Wordnik API Key",
+      "desc": "API Key for accessing Wordnik",
+      "section": "Config",
+      "key": "wordnik_api_key"
+    },
+    { "type": "numeric",
+      "title": "Maximum Guesses",
+      "desc": "How many guesses are allowed",
+      "section": "Config",
+      "key": "max_guesses" }
+]

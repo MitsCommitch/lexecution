@@ -1,0 +1,24 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+requests = "*"
+bleach = "*"
+flask = "*"
+flask-restful = "*"
+flask-cors = "*"
+kivy = "*"
+markdownify = "*"
+flask-restplus = "*"
+flask-restx = "*"
+pyqt5 = "*"
+waitress = "*"
+pyside6 = "*"
+
+[dev-packages]
+pyqt5-tools = "*"
+
+[requires]
+python_version = "3.10"
