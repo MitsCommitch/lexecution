@@ -19,7 +19,8 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pipenv install
+          python -m pip install pipenv
+          pipenv install
       - uses: Nuitka/Nuitka-Action@main
         with:
           nuitka-version: main
