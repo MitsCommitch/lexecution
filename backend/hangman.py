@@ -141,7 +141,7 @@ class Hangman(QObject):
             self.prev_word = self.word
             self.prev_definition = self.definition
         if message:
-            message = f'{message}\nMeaning: {self.prev_definition}'
+            message = f'{message}\n'
         return message
             
     def hangman(self):

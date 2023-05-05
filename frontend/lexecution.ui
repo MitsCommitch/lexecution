@@ -114,7 +114,7 @@
       <property name="font">
        <font>
         <family>Gabriola</family>
-        <pointsize>18</pointsize>
+        <pointsize>24</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
@@ -144,7 +144,7 @@
       <property name="font">
        <font>
         <family>Gabriola</family>
-        <pointsize>18</pointsize>
+        <pointsize>20</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
@@ -202,8 +202,15 @@
     </property>
     <addaction name="actionConfig"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionShow_Hide_Menubar"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuView"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionNew">
@@ -219,6 +226,17 @@
   <action name="actionConfig">
    <property name="text">
     <string>Config</string>
+   </property>
+  </action>
+  <action name="actionShow_Hide_Menubar">
+   <property name="text">
+    <string>Show/Hide Menubar</string>
+   </property>
+   <property name="visible">
+    <bool>true</bool>
+   </property>
+   <property name="shortcutVisibleInContextMenu">
+    <bool>true</bool>
    </property>
   </action>
  </widget>
