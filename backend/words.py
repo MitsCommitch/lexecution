@@ -87,6 +87,8 @@ class Words:
         if not word_def:
             return None
         #There's surely a better way here, but this 'works'
+        if type(word_def) == list:
+            word_def = word_def[0]
         bolds = self.bold.findall(word_def)
         for entry in bolds:
             word_def = self.bold.sub(repl='<b>\\1</b>', string=word_def, count=1)

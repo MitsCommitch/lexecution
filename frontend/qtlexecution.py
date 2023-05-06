@@ -20,8 +20,6 @@ class LexUi(QtWidgets.QMainWindow, lexecution_ui.Ui_MainWindow):
         self.actionShow_Hide_Menubar.toggled.connect(self.menuToggle)
         self.actionExit.triggered.connect(sys.exit)
 
-        self.show()
-
     def updateUI(self):
         if self.game:
             self.rubrick.setText(' '.join(self.game.display))
@@ -29,9 +27,25 @@ class LexUi(QtWidgets.QMainWindow, lexecution_ui.Ui_MainWindow):
             self.used_letters.setText(f'Used Letters: {" ".join(self.game.wrong)}')
             self.rogue.setStyleSheet(f'image: url(:/stickman/{self.game.used}.png)')
 
+    def updateFont(self):
+        font_size = self.settings.value('font_size')
+        if not font_size:
+            font_size = 18
+        font_size = int(font_size)
+        if font_size:
+            font = self.definition.font()
+            font.setPointSize(font_size)
+            self.definition.setFont(font)
+            font.setPointSize(font_size+6)
+            self.rubrick.setFont(font)
+            font.setPointSize(font_size+2)
+            self.used_letters.setFont(font)
+            self.update()
+
     def config(self):
         dlg = ConfigDialog()
         dlg.exec()
+        self.updateFont()
 
     def menuToggle(self):
         if self.actionShow_Hide_Menubar.isChecked():

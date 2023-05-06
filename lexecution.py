@@ -1,6 +1,7 @@
 from backend import create_app
 from backend.hangman import Hangman
 from frontend.qtlexecution import LexUi
+from PySide6.QtGui import QFont
 from PySide6.QtCore import QThread, QSettings
 from PySide6.QtWidgets import QApplication
 from waitress import serve
@@ -20,24 +21,19 @@ class FlaskThread(QThread):
 
 def createUi(qtapp):
     settings = QSettings('MitchGames', 'Lexecution')
-    config = {
-        'api_key': settings.value('api_key'),
-        'max_guesses': settings.value('max_guesses')
-    }
-    window = LexUi()
-    window.show()
-    if not config['api_key']:
+    config = get_config(settings)
+
+    while not config.get('api_key') and not config.get('max_guesses'):
+        window = LexUi()
+        window.show()
         window.config()
-    game = None
-    while not game:
-        try:
-            game = Hangman(config=config)
-            window = LexUi(game)
-        except ValueError as ve:
-            window = LexUi()
-            window.show()
-            window.config()
-        
+        config = get_config(settings)
+
+    game = Hangman(config=config)
+    window = LexUi(game)
+    
+    if not window.isVisible():
+        window.show()
     application = create_app(game)
     webapp = FlaskThread(application)
     webapp.start()
@@ -46,6 +42,15 @@ def createUi(qtapp):
     
     return qtapp.exec_()
 
+
+def get_config(settings):
+    config = {
+        'api_key': settings.value('api_key'),
+        'max_guesses': settings.value('max_guesses'),
+        'font_size': settings.value('font_size')
+    }
+
+    return config
 
 if __name__ == '__main__':
     qtapp = QApplication(sys.argv)

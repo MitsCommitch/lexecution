@@ -136,7 +136,7 @@ class Hangman(QObject):
             self.prev_word = self.word
             self.prev_definition = self.definition
         elif self.used < 1:
-            message = f'Oh no! Our lovable rogue was hanged. The word was: {self.word}'
+            message = f"Oh no! We didn't get the word in time. The word was: {self.word}"
             self.running = False
             self.prev_word = self.word
             self.prev_definition = self.definition
