@@ -112,7 +112,7 @@ class Hangman(QObject):
         elif guess in self.word.lower():
             self.right.append(guess)
             self.replace_hits(guess)
-            message = ''
+            message = f'You found {guess}!'
         else:
             message = f'Sorry, {guess} is not in the word. Keep guessing!'
             self.wrong.append(guess)

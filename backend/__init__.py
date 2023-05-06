@@ -37,8 +37,8 @@ def create_app(game):
             return Response(status=HTTPStatus.BAD_REQUEST)
         else:
             guess = guess.decode()
-            game.guess(guess)
-            return Response(status=HTTPStatus.OK)
+            message = game.guess(guess)
+            return Response(response=message, status=HTTPStatus.OK)
 
     return app
 
