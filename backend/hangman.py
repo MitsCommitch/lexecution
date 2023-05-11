@@ -56,6 +56,7 @@ class Hangman(QObject):
         except AttributeError as err:
             print(f'Could not get word! {err}')
             return err
+        self.word_length = len(self.word)
         self.definition = self.get_definition(self.word)
         self.rubrick = '_'*len(self.word)
         self.replace_special()
@@ -88,8 +89,10 @@ class Hangman(QObject):
             message = 'You have to make a guess!'
             return message
 
+        guess_length = len(guess)
+
         # Full word guess
-        if len(guess) == len(self.word):
+        if guess_length == self.word_length:
             message = ''
             if guess.lower() == self.word.lower():
                 self.rubrick = self.word
@@ -101,6 +104,13 @@ class Hangman(QObject):
                 if not message:
                     message = f'Sorry, {guess} is not the word. Keep guessing!'
             self.updated.emit()
+            return message
+
+        if guess_length > 1:
+            if guess_length < self.word_length:
+                message = f'Sorry, {guess} is too short. Word is {self.word_length} long!'
+            else:
+                message = f'Sorry, {guess} is too long. Word is {self.word_length} long!'
             return message
 
         # Letter guess, force single char
