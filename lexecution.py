@@ -1,5 +1,6 @@
 from backend import create_app
 from backend.hangman import Hangman
+from charset_normalizer import md__mypyc
 from frontend.qtlexecution import LexUi
 from PySide6.QtGui import QFont
 from PySide6.QtCore import QThread, QSettings
