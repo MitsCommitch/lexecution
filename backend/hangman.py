@@ -20,9 +20,10 @@ class Hangman(QObject):
 
         self.guesses = int(self.config.get('max_guesses'))
         self.used = self.guesses
-        self.words = Words(self.config.get('api_key'))
+        self.wordnik = Words(self.config.get('api_key'))
         self.running = True
         self.win = False
+        self.words = []
         self.word = None
         self.definition = None
         self.prev_word = None
@@ -51,11 +52,17 @@ class Hangman(QObject):
             prev = self.word
         else:
             prev = None
-        try:
-            self.word = self.words.get_word()
-        except AttributeError as err:
-            print(f'Could not get word! {err}')
-            return err
+
+        if not self.words or self.word == self.words[-1]:
+            try:
+                self.words = self.wordnik.get_words()
+            except Exception as err:
+                print(f'Could not get word! {err}')
+                return err
+            
+            self.word = self.words[0]
+        else:
+            self.word = self.words[self.words.index(self.word)+1]
         self.word_length = len(self.word)
         self.definition = self.get_definition(self.word)
         self.rubrick = '_'*len(self.word)
@@ -78,7 +85,7 @@ class Hangman(QObject):
         self.display = ' '.join(self.rubrick)
 
     def get_definition(self, word):
-        return self.words.get_def(word)
+        return self.wordnik.get_def(word)
 
     def guess(self, guess):
         if not self.running:

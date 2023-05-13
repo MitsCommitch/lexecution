@@ -4,25 +4,14 @@ import re
 import requests
 
 apiUrl = 'http://api.wordnik.com/v4'
-ignoredPartsOfSpeech = [
-    'abbreviation',
-    'affix',
-    'article',
-    'conjunction',
-    'family-name',
-    'given-name',
-    'idiom',
-    'imperative',
-    'interjection',
-    'noun-plural',
-    'past-participle',
-    'phrasal-prefix',
-    'pronoun',
-    'proper-noun-plural',
-    'proper-noun-posessive',
-    'proper-noun',
-    'suffix'
+acceptedPartsOfSpeech = [
+    'adjective',
+    'adverb',
+    'noun',
+    'preposition',
+    'verb'
 ]
+
 
 class Words:
     bold = re.compile(r'\*\*(.+?)\*\*')
@@ -32,7 +21,7 @@ class Words:
         self.api_key = key
 
 
-    def get_word(self):
+    def get_words(self):
         if not self.api_key:
             raise ValueError("No API key provided.")
         params = {
@@ -41,23 +30,19 @@ class Words:
             'minLength': 4,
             'maxLength': 20,
             'minDictionaryCount': 3,
-            'excludePartOfSpeech': ','.join(ignoredPartsOfSpeech)
+            'includePartOfSpeech': ','.join(acceptedPartsOfSpeech),
+            'limit': 10
         }
-        word = None
-        definition = None
-        while not definition:
-            try:
-                r = requests.get(f'{apiUrl}/words.json/randomWord', params=params)
-                r.raise_for_status()
-            except requests.HTTPError as e:
-                if e.response.status_code == 401:
-                    raise ValueError("Invalid API key provided.") 
+        
+        try:
+            r = requests.get(f'{apiUrl}/words.json/randomWords', params=params)
+            r.raise_for_status()
+        except requests.HTTPError as e:
+            if e.response.status_code == 401:
+                raise ValueError("Invalid API key provided.") 
+        words = [d.get('word') for d in r.json()]
 
-            word = r.json().get("word")
-
-            definition = self.get_def(word)
-
-        return word
+        return words
 
 
     def get_def(self, word):
