@@ -32,7 +32,7 @@ def createUi(qtapp):
 
     game = Hangman(config=config)
     window = LexUi(game)
-    
+
     if not window.isVisible():
         window.show()
     application = create_app(game)
@@ -40,6 +40,10 @@ def createUi(qtapp):
     webapp.start()
     qtapp.aboutToQuit.connect(webapp.terminate)
     window.updateUI()
+
+    bg = settings.value("bgstylesheet")
+    if bg:
+        window.centralwidget.setStyleSheet(bg)
     
     return qtapp.exec_()
 

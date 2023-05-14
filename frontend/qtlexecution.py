@@ -9,7 +9,6 @@ from frontend.assets.public import images_rc
 class LexUi(QtWidgets.QMainWindow, lexecution_ui.Ui_MainWindow):
     def __init__(self, game=None):
         super(LexUi, self).__init__()
-        #uic.loadUi(f'{os.path.dirname(os.path.realpath(__file__))}{os.sep}lexecution2.ui', self)
         self.setupUi(self)
         self.settings = QtCore.QSettings('MitchGames', 'Lexecution')
         if game:
@@ -17,7 +16,8 @@ class LexUi(QtWidgets.QMainWindow, lexecution_ui.Ui_MainWindow):
             self.game.updated.connect(self.updateUI)
         self.actionNew.triggered.connect(self.new_game)
         self.actionConfig.triggered.connect(self.config)
-        self.actionShow_Hide_Menubar.toggled.connect(self.menuToggle)
+        self.actionDefaultBG.triggered.connect(self.defaultBG)
+        self.actionBGImage.triggered.connect(self.setBGImage)
         self.actionExit.triggered.connect(sys.exit)
 
     def updateUI(self):
@@ -47,11 +47,22 @@ class LexUi(QtWidgets.QMainWindow, lexecution_ui.Ui_MainWindow):
         dlg.exec()
         self.updateFont()
 
-    def menuToggle(self):
-        if self.actionShow_Hide_Menubar.isChecked():
-            self.menubar.setVisible(False)
-        else:
-            self.menubar.setVisible(True)
+    def setBGImage(self):
+        dlg = QtWidgets.QFileDialog()
+        dlg.setFileMode(QtWidgets.QFileDialog.ExistingFile)
+        if dlg.exec():
+            filename = dlg.selectedFiles()
+            if filename:
+                        path = os.path.realpath(filename[0])
+                        path = path.replace("\\", "/")
+                        stylesheet = f"QWidget#centralwidget{{border-image: url(\"{path}\") 0 0 0 0 stretch stretch;}}"
+                        self.settings.setValue("bgstylesheet", stylesheet)
+                        self.centralwidget.setStyleSheet(stylesheet)
+
+    def defaultBG(self):
+        self.settings.setValue("bgstylesheet", None)
+        stylesheet = u"QWidget#centralwidget{border-image: url(:/background/castletext.jpg);}"
+        self.centralwidget.setStyleSheet(stylesheet)
 
     def new_game(self):
         if self.game:

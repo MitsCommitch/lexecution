@@ -33,16 +33,13 @@ class Ui_MainWindow(object):
         self.actionExit.setObjectName(u"actionExit")
         self.actionConfig = QAction(MainWindow)
         self.actionConfig.setObjectName(u"actionConfig")
-        self.actionShow_Hide_Menubar = QAction(MainWindow)
-        self.actionShow_Hide_Menubar.setCheckable(True)
-        self.actionShow_Hide_Menubar.setObjectName(u"actionShow_Hide_Menubar")
-        self.actionShow_Hide_Menubar.setShortcut(QKeySequence("Alt+m"))
+        self.actionDefaultBG = QAction(MainWindow)
+        self.actionDefaultBG.setObjectName(u"actionDefaultBG")
+        self.actionBGImage = QAction(MainWindow)
+        self.actionBGImage.setObjectName(u"actionBGImage")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.centralwidget.setStyleSheet(u"QWidget#centralwidget\n"
-"{\n"
-"     border-image: url(:/background/castletext.jpg);\n"
-"}")
+        self.centralwidget.setStyleSheet(u"QWidget#centralwidget{border-image: url(:/background/castletext.jpg);}")
         self.gridLayout = QGridLayout(self.centralwidget)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(20, -1, -1, 20)
@@ -175,8 +172,6 @@ class Ui_MainWindow(object):
         self.menuFile.setObjectName(u"menuFile")
         self.menuEdit = QMenu(self.menubar)
         self.menuEdit.setObjectName(u"menuEdit")
-        self.menuView = QMenu(self.menubar)
-        self.menuView.setObjectName(u"menuView")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -184,11 +179,11 @@ class Ui_MainWindow(object):
 
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuEdit.menuAction())
-        self.menubar.addAction(self.menuView.menuAction())
         self.menuFile.addAction(self.actionNew)
         self.menuFile.addAction(self.actionExit)
         self.menuEdit.addAction(self.actionConfig)
-        self.menuView.addAction(self.actionShow_Hide_Menubar)
+        self.menuEdit.addAction(self.actionDefaultBG)
+        self.menuEdit.addAction(self.actionBGImage)
 
         self.retranslateUi(MainWindow)
 
@@ -200,12 +195,12 @@ class Ui_MainWindow(object):
         self.actionNew.setText(QCoreApplication.translate("MainWindow", u"New", None))
         self.actionExit.setText(QCoreApplication.translate("MainWindow", u"Exit", None))
         self.actionConfig.setText(QCoreApplication.translate("MainWindow", u"Config", None))
-        self.actionShow_Hide_Menubar.setText(QCoreApplication.translate("MainWindow", u"Show/Hide Menubar", None))
+        self.actionDefaultBG.setText(QCoreApplication.translate("MainWindow", u"Use Default Background Image"))
+        self.actionBGImage.setText(QCoreApplication.translate("MainWindow", u"Set Background Image", None))
         self.definition.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>TextLabel</p></body></html>", None))
         self.rubrick.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.used_letters.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
         self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"File", None))
         self.menuEdit.setTitle(QCoreApplication.translate("MainWindow", u"Edit", None))
-        self.menuView.setTitle(QCoreApplication.translate("MainWindow", u"View", None))
     # retranslateUi
 
