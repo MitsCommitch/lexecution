@@ -21,7 +21,7 @@ class LexUi(QtWidgets.QMainWindow, lexecution_ui.Ui_MainWindow):
         self.actionExit.triggered.connect(sys.exit)
 
     def updateUI(self):
-        if self.game.running:
+        if self.game:
             self.rubrick.setText(' '.join(self.game.display))
             self.definition.setText(f'Previous Word: {self.game.prev_word}<br>Definition: {self.game.prev_definition}')
             self.used_letters.setText(f'Used Letters: {" ".join(self.game.wrong)}')

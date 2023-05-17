@@ -39,7 +39,6 @@ def createUi(qtapp):
     webapp = FlaskThread(application)
     webapp.start()
     qtapp.aboutToQuit.connect(webapp.terminate)
-    window.updateUI()
 
     bg = settings.value("bgstylesheet")
     if bg:
