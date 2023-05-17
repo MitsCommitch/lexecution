@@ -86,7 +86,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.rogue.sizePolicy().hasHeightForWidth())
         self.rogue.setSizePolicy(sizePolicy)
         self.rogue.setAutoFillBackground(False)
-        self.rogue.setStyleSheet(u"image: url(:/stickman/1.png)")
+        self.rogue.setStyleSheet(u"image: url(:/stickman/0.png)")
         self.rogue.setFrameShape(QFrame.StyledPanel)
         self.rogue.setFrameShadow(QFrame.Raised)
 
@@ -197,9 +197,9 @@ class Ui_MainWindow(object):
         self.actionConfig.setText(QCoreApplication.translate("MainWindow", u"Config", None))
         self.actionDefaultBG.setText(QCoreApplication.translate("MainWindow", u"Use Default Background Image"))
         self.actionBGImage.setText(QCoreApplication.translate("MainWindow", u"Set Background Image", None))
-        self.definition.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>TextLabel</p></body></html>", None))
-        self.rubrick.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
-        self.used_letters.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.definition.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>Previous Word<br>Definition</p></body></html>", None))
+        self.rubrick.setText(QCoreApplication.translate("MainWindow", u"_ _ _ _ _", None))
+        self.used_letters.setText(QCoreApplication.translate("MainWindow", u"Used Letters:", None))
         self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"File", None))
         self.menuEdit.setTitle(QCoreApplication.translate("MainWindow", u"Edit", None))
     # retranslateUi

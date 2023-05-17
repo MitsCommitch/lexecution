@@ -21,7 +21,7 @@ class Hangman(QObject):
         self.guesses = int(self.config.get('max_guesses'))
         self.used = self.guesses
         self.wordnik = Words(self.config.get('api_key'))
-        self.running = True
+        self.running = False
         self.win = False
         self.words = []
         self.word = None
@@ -30,8 +30,6 @@ class Hangman(QObject):
         self.prev_definition = None
         self.wrong = []
         self.right = []
-
-        self.new_game()
 
     def status(self):
         return {
@@ -173,3 +171,4 @@ class Hangman(QObject):
 if __name__ == "__main__":
     h = Hangman()
     h.hangman()
+    h.new_game()
