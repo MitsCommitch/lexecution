@@ -19,7 +19,17 @@ def create_app(game):
             stats = json.dumps(game.status())
         except Exception as e:
             return Response(str(e), status=HTTPStatus.INTERNAL_SERVER_ERROR)
-        return Response(stats, status=HTTPStatus.OK, content_type='application/json')
+        return Response(stats, status=HTTPStatus.OK)
+    
+    @app.route("/word")
+    def word():
+        try:
+            word = game.status().get('curr')
+        except Exception as e:
+            return Response(str(e), status=HTTPStatus.INTERNAL_SERVER_ERROR)
+
+        if word:
+            return Response(word, status=HTTPStatus.OK)
     
     @app.route("/new")
     def new_game():
