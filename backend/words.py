@@ -11,6 +11,12 @@ acceptedPartsOfSpeech = [
     'preposition',
     'verb'
 ]
+excludedPartsOfSpeech = [
+    'abbreviation',
+    'family-name',
+    'given-name',
+    'proper-noun'
+]
 
 
 class Words:
@@ -31,6 +37,7 @@ class Words:
             'maxLength': 20,
             'minDictionaryCount': 3,
             'includePartOfSpeech': ','.join(acceptedPartsOfSpeech),
+            'excludePartOfSpeech': ','.join(excludedPartsOfSpeech),
             'limit': 10
         }
         
@@ -61,7 +68,12 @@ class Words:
         except requests.exceptions.HTTPError as err:
             return err
 
-        word_def = r.json()[0].get("text")
+        defs = r.json()
+        word_def = None
+        for d in defs:
+            word_def = d.get("text")
+            if word_def:
+                break
 
         res = self.format_def(word_def)
 
