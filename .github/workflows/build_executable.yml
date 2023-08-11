@@ -33,4 +33,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: lexecution.exe
-          path: build/lexecution.exe
+          path: build/lexecution.dist/lexecution.exe
