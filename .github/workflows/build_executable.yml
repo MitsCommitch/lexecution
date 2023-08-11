@@ -24,6 +24,8 @@ jobs:
         with:
           script-name: lexecution.py
           standalone: true
+          disable-console: true
+          onefile: false
           enable-plugins: pyside6
 
       # Uploads artifact
