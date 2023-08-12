@@ -1,0 +1,21 @@
+name: Build App with Pyinstaller
+run-name: Generating Pyinstaller executables for ${{github.ref_name}}
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: JackMcKew/pyinstaller-action-windows@main
+        with:
+          path: .
+
+      # Uploads artifact
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: lexecution
+          path: ./dist/windows
