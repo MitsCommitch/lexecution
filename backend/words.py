@@ -4,18 +4,17 @@ import re
 import requests
 
 apiUrl = 'http://api.wordnik.com/v4'
-acceptedPartsOfSpeech = [
-    'adjective',
-    'adverb',
-    'noun',
-    'preposition',
-    'verb'
-]
 excludedPartsOfSpeech = [
+    'pronoun',
     'abbreviation',
+    'affix',
     'family-name',
     'given-name',
-    'proper-noun'
+    'idiom',
+    'noun-posessive',
+    'proper-noun',
+    'proper-noun-plural',
+    'suffix'
 ]
 
 
@@ -36,9 +35,9 @@ class Words:
             'minLength': 4,
             'maxLength': 20,
             'minDictionaryCount': 3,
-            'includePartOfSpeech': ','.join(acceptedPartsOfSpeech),
             'excludePartOfSpeech': ','.join(excludedPartsOfSpeech),
-            'limit': 10
+            'limit': 20,
+            'minCorpusCount': 10
         }
         
         try:
@@ -47,17 +46,18 @@ class Words:
         except requests.HTTPError as e:
             if e.response.status_code == 401:
                 raise ValueError("Invalid API key provided.") 
-        words = [d.get('word') for d in r.json()]
+
+        results = [d.get('word') for d in r.json()]
+
+        words = [w for w in results if not any(e.isupper() or e.isspace() for e in w)]
 
         return words
-
 
     def get_def(self, word):
         params = {
             'api_key': self.api_key,
             'useCanonical': True,
-            'limit': 1,
-            'sourceDictionaries': 'ahd-5,webster,wordnet'
+            'limit': 1
         }
         try:
             r = requests.get(f'{apiUrl}/word.json/{word}/definitions', params=params)
