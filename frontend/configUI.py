@@ -46,9 +46,6 @@ class ConfigDialog(QtWidgets.QDialog):
         self.api_key.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         self.guesses_label = QtWidgets.QLabel("Max Guesses")
         self.max_guesses = QtWidgets.QLineEdit()
-        self.font_size_label = QtWidgets.QLabel("Base Font Size")
-        self.font_size = QtWidgets.QLineEdit()
-        self.font_size.setPlaceholderText("18")
 
         _buttons = QtWidgets.QDialogButtonBox.StandardButton
         self.button_box = QtWidgets.QDialogButtonBox(_buttons.Ok | _buttons.Cancel)
@@ -60,15 +57,12 @@ class ConfigDialog(QtWidgets.QDialog):
         slayout.addWidget(self.api_key)
         slayout.addWidget(self.guesses_label)
         slayout.addWidget(self.max_guesses)
-        slayout.addWidget(self.font_size_label)
-        slayout.addWidget(self.font_size)
         slayout.addWidget(self.button_box)
         self.setLayout(slayout)
 
         self.map = {
             'api_key': self.api_key,
             'max_guesses': self.max_guesses,
-            'font_size': self.font_size
         }
 
         self.load_settings()
