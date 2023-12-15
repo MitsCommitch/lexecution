@@ -44,12 +44,9 @@ class Hangman(QObject):
 
 
     def new_game(self, config=None):
-        if self.prev_word:
-            prev = self.prev_word
-        elif self.word:
-            prev = self.word
-        else:
-            prev = None
+        if self.word:
+            self.prev_word = self.word
+            self.prev_definition = self.definition
 
         while not self.words or self.word == self.words[-1]:
             try:
