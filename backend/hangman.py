@@ -51,7 +51,7 @@ class Hangman(QObject):
         else:
             prev = None
 
-        if not self.words or self.word == self.words[-1]:
+        while not self.words or self.word == self.words[-1]:
             try:
                 self.words = self.wordnik.get_words()
             except Exception as err:
