@@ -61,11 +61,11 @@ class Words:
         try:
             r = requests.get(f'{apiUrl}/word.json/{word}/definitions', params=params)
             if r.status_code == HTTPStatus.NOT_FOUND:
-                return None
+                return "IDK, Doom(tm) or something"
 
             r.raise_for_status()
         except requests.exceptions.HTTPError as err:
-            return err
+            return f"Error {r.status_code}"
 
         defs = r.json()
         word_def = None
