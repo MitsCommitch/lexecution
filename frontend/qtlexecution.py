@@ -10,10 +10,10 @@ class LexUi(QtWidgets.QMainWindow, lexecution_ui.Ui_MainWindow):
     def __init__(self, game=None):
         super(LexUi, self).__init__()
         self.settings = QtCore.QSettings('MitchGames', 'Lexecution')
-        self.setupUi(self)
         if game:
             self.game = game
             self.game.updated.connect(self.updateUI)
+        self.setupUi(self)
         self.actionNew.triggered.connect(self.new_game)
         self.actionConfig.triggered.connect(self.config)
         self.actionFont.triggered.connect(self.font_choice)
@@ -27,23 +27,38 @@ class LexUi(QtWidgets.QMainWindow, lexecution_ui.Ui_MainWindow):
             self.rubrick.setText(' '.join(self.game.display))
             self.definition.setText(f'Previous Word: {self.game.prev_word}<br>Definition: {self.game.prev_definition}')
             self.used_letters.setText(f'Used Letters: {" ".join(self.game.wrong)}')
-            self.rogue.setStyleSheet(f'image: url(:/stickman/{self.game.used}.png)')
+            #self.rogue.setStyleSheet(f'image: url(:/stickman/{self.game.used}.png)')
+            self.rogue_recolor()
+
+    def rogue_recolor(self):
+        curr_img = QtGui.QImage(f":/stickman/{self.game.used}.png")
+        color = self.settings.value('font_color')
+        if not color:
+            color = "#000000"
+        
+        curr_pm = QtGui.QPixmap.fromImage(curr_img)
+        upd_pm = QtGui.QPixmap(curr_pm.size())
+        upd_pm.fill(QtGui.QColor(color))
+        upd_pm.setMask(curr_pm.createMaskFromColor(QtGui.QColor("transparent")))
+
+        self.rogue.setPixmap(upd_pm)
 
     def font_color(self):
         color = QtWidgets.QColorDialog.getColor()
         if color.isValid():
             cn = color.name()
-            self.updateFont(font_color = cn)
+            self.update_font(font_color = cn)
             self.settings.setValue('font_color', cn)
+            self.rogue_recolor()
 
 
     def font_choice(self):
         valid, font = QtWidgets.QFontDialog.getFont(self.definition.font())
         if valid:
-            self.updateFont(font)
+            self.update_font(font=font, font_size=font.pointSize())
             self.settings.setValue('font', font.family())
 
-    def updateFont(self, font=None, font_size=None, font_color=None):
+    def update_font(self, font=None, font_size=None, font_color=None):
         if not font:
             font = QtGui.QFont(self.settings.value('font'))
 
@@ -57,7 +72,7 @@ class LexUi(QtWidgets.QMainWindow, lexecution_ui.Ui_MainWindow):
         if font_size:
             font.setPointSize(font_size)
             self.definition.setFont(font)
-            font.setPointSize(font_size+6)
+            font.setPointSize(font_size+4)
             self.rubrick.setFont(font)
             font.setPointSize(font_size+2)
             self.used_letters.setFont(font)

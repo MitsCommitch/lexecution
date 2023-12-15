@@ -82,15 +82,17 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.widget_7, 2, 2, 1, 1)
 
-        self.rogue = QFrame(self.centralwidget)
+        self.rogue = QLabel(self.centralwidget)
         self.rogue.setObjectName(u"rogue")
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy = QSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.rogue.sizePolicy().hasHeightForWidth())
         self.rogue.setSizePolicy(sizePolicy)
         self.rogue.setAutoFillBackground(False)
-        self.rogue.setStyleSheet(u"image: url(:/stickman/0.png)")
+        #self.rogue.setStyleSheet(u"image: url(:/stickman/0.png)")
+        self.rogue_recolor()
+        self.rogue.setScaledContents(True)
         self.rogue.setFrameShape(QFrame.StyledPanel)
         self.rogue.setFrameShadow(QFrame.Raised)
 
@@ -98,21 +100,10 @@ class Ui_MainWindow(object):
 
         self.definition = QLabel(self.centralwidget)
         self.definition.setObjectName(u"definition")
-        self.definition.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
-        font = QFont()
-        family = self.settings.value('font')
-        if family:
-            font.setFamily(family)
-        else:
-            font.setFamily(u"Gabriola")
-        
-        points = int(self.settings.value('font_size'))
-        if points:
-            font.setPointSize(points)
-        else:
-            font.setPointSize(18)
-        font.setBold(False)
-        self.definition.setFont(font)
+        self.definition.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        def_font = QFont()
+        def_font.setBold(False)
+        self.definition.setFont(def_font)
         self.definition.setTextFormat(Qt.RichText)
         self.definition.setScaledContents(False)
         self.definition.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignTop)
@@ -127,20 +118,9 @@ class Ui_MainWindow(object):
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.rubrick.sizePolicy().hasHeightForWidth())
         self.rubrick.setSizePolicy(sizePolicy1)
-        font1 = QFont()
-
-        if family:
-            font.setFamily(family)
-        else:
-            font.setFamily(u"Gabriola")
-
-        if points:
-            font.setPointSize(points+4)
-        else:
-            font.setPointSize(24)
-
-        font1.setBold(True)
-        self.rubrick.setFont(font1)
+        rubrick_font = QFont()
+        rubrick_font.setBold(True)
+        self.rubrick.setFont(rubrick_font)
         self.rubrick.setFrameShadow(QFrame.Plain)
         self.rubrick.setScaledContents(False)
         self.rubrick.setAlignment(Qt.AlignBottom|Qt.AlignLeading|Qt.AlignLeft)
@@ -152,23 +132,28 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.used_letters.sizePolicy().hasHeightForWidth())
         self.used_letters.setSizePolicy(sizePolicy)
 
-        font2 = QFont()
-
-        if family:
-            font.setFamily(family)
-        else:
-            font.setFamily(u"Gabriola")
-
-        if points:
-            font.setPointSize(points+2)
-        else:
-            font.setPointSize(20)
-
-        font2.setBold(True)
-        self.used_letters.setFont(font2)
+        used_letters_font = QFont()
+        used_letters_font.setBold(True)
+        self.used_letters.setFont(used_letters_font)
         self.used_letters.setScaledContents(False)
         self.used_letters.setAlignment(Qt.AlignBottom|Qt.AlignLeading|Qt.AlignLeft)
         self.used_letters.setWordWrap(True)
+
+        family = self.settings.value('font')
+        if not family:
+            family = u"Gabriola"
+        
+        font = QFont(family)
+
+        points = int(self.settings.value('font_size'))
+        if not points:
+            points = 18
+
+        font_color = self.settings.value('font_color')
+        if not font_color:
+            font_color = "#000000"
+
+        self.update_font(font=font, font_size=points, font_color=font_color)
 
         self.gridLayout.addWidget(self.used_letters, 5, 0, 1, 3)
 
