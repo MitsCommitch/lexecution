@@ -37,7 +37,7 @@ class Words:
             'minDictionaryCount': 3,
             'excludePartOfSpeech': ','.join(excludedPartsOfSpeech),
             'limit': 20,
-            'minCorpusCount': 10
+            'minCorpusCount': 20
         }
         
         try:
@@ -57,7 +57,6 @@ class Words:
         params = {
             'api_key': self.api_key,
             'useCanonical': True,
-            'limit': 1
         }
         try:
             r = requests.get(f'{apiUrl}/word.json/{word}/definitions', params=params)
