@@ -44,7 +44,7 @@ def createUi(qtapp):
     if bg:
         window.centralwidget.setStyleSheet(bg)
     
-    return qtapp.exec_()
+    return qtapp.exec()
 
 
 def get_config(settings):
