@@ -37,6 +37,10 @@ class Ui_MainWindow(object):
         self.actionDefaultBG.setObjectName(u"actionDefaultBG")
         self.actionBGImage = QAction(MainWindow)
         self.actionBGImage.setObjectName(u"actionBGImage")
+        self.actionFont = QAction(MainWindow)
+        self.actionFont.setObjectName(u"actionFont")
+        self.actionFontColor = QAction(MainWindow)
+        self.actionFontColor.setObjectName(u"actionFontColor")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.centralwidget.setStyleSheet(u"QWidget#centralwidget{border-image: url(:/background/castletext.jpg);}")
@@ -94,9 +98,19 @@ class Ui_MainWindow(object):
 
         self.definition = QLabel(self.centralwidget)
         self.definition.setObjectName(u"definition")
+        self.definition.setSizePolicy(QSizePolicy.Maximum, QSizePolicy.Maximum)
         font = QFont()
-        font.setFamilies([u"Gabriola"])
-        font.setPointSize(18)
+        family = self.settings.value('font')
+        if family:
+            font.setFamily(family)
+        else:
+            font.setFamily(u"Gabriola")
+        
+        points = int(self.settings.value('font_size'))
+        if points:
+            font.setPointSize(points)
+        else:
+            font.setPointSize(18)
         font.setBold(False)
         self.definition.setFont(font)
         self.definition.setTextFormat(Qt.RichText)
@@ -114,8 +128,17 @@ class Ui_MainWindow(object):
         sizePolicy1.setHeightForWidth(self.rubrick.sizePolicy().hasHeightForWidth())
         self.rubrick.setSizePolicy(sizePolicy1)
         font1 = QFont()
-        font1.setFamilies([u"Gabriola"])
-        font1.setPointSize(24)
+
+        if family:
+            font.setFamily(family)
+        else:
+            font.setFamily(u"Gabriola")
+
+        if points:
+            font.setPointSize(points+4)
+        else:
+            font.setPointSize(24)
+
         font1.setBold(True)
         self.rubrick.setFont(font1)
         self.rubrick.setFrameShadow(QFrame.Plain)
@@ -128,9 +151,19 @@ class Ui_MainWindow(object):
         self.used_letters.setObjectName(u"used_letters")
         sizePolicy.setHeightForWidth(self.used_letters.sizePolicy().hasHeightForWidth())
         self.used_letters.setSizePolicy(sizePolicy)
+
         font2 = QFont()
-        font2.setFamilies([u"Gabriola"])
-        font2.setPointSize(20)
+
+        if family:
+            font.setFamily(family)
+        else:
+            font.setFamily(u"Gabriola")
+
+        if points:
+            font.setPointSize(points+2)
+        else:
+            font.setPointSize(20)
+
         font2.setBold(True)
         self.used_letters.setFont(font2)
         self.used_letters.setScaledContents(False)
@@ -182,6 +215,8 @@ class Ui_MainWindow(object):
         self.menuFile.addAction(self.actionNew)
         self.menuFile.addAction(self.actionExit)
         self.menuEdit.addAction(self.actionConfig)
+        self.menuEdit.addAction(self.actionFont)
+        self.menuEdit.addAction(self.actionFontColor)
         self.menuEdit.addAction(self.actionDefaultBG)
         self.menuEdit.addAction(self.actionBGImage)
 
@@ -195,6 +230,8 @@ class Ui_MainWindow(object):
         self.actionNew.setText(QCoreApplication.translate("MainWindow", u"New", None))
         self.actionExit.setText(QCoreApplication.translate("MainWindow", u"Exit", None))
         self.actionConfig.setText(QCoreApplication.translate("MainWindow", u"Config", None))
+        self.actionFont.setText(QCoreApplication.translate("MainWindow", u"Font", None))
+        self.actionFontColor.setText(QCoreApplication.translate("MainWindow", u"Font Color", None))
         self.actionDefaultBG.setText(QCoreApplication.translate("MainWindow", u"Use Default Background Image"))
         self.actionBGImage.setText(QCoreApplication.translate("MainWindow", u"Set Background Image", None))
         self.definition.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p>Previous Word<br>Definition</p></body></html>", None))

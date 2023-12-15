@@ -51,7 +51,9 @@ def get_config(settings):
     config = {
         'api_key': settings.value('api_key'),
         'max_guesses': settings.value('max_guesses'),
-        'font_size': settings.value('font_size')
+        'font': settings.value('font'),
+        'font_size': settings.value('font_size'),
+        'font_color': settings.value('font_color')
     }
 
     return config
