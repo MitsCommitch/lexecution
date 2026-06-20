@@ -1,6 +1,6 @@
 -i https://pypi.org/simple
 beautifulsoup4==4.12.2
-bleach==6.0.0
+bleach==6.4.0
 blinker==1.6.2
 certifi==2023.7.22
 charset-normalizer==3.2.0
